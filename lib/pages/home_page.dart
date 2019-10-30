@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:curso_flutter_2/utils/icono_string.dart';
 import 'package:flutter/material.dart';
 import 'package:curso_flutter_2/providers/menu_provider.dart';
 
@@ -35,7 +36,7 @@ class HomePage extends StatelessWidget {
     data.forEach((opt){
       final widgetTemp = ListTile(
         title: Text(opt['texto']),
-        leading: Icon(Icons.accessibility, color: Colors.blueAccent,),
+        leading: getIcon(opt['icon']),
         trailing: Icon(Icons.keyboard_arrow_right, color:Colors.blueAccent),
         onTap: () {},
       );
