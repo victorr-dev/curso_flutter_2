@@ -1,7 +1,7 @@
-import 'package:curso_flutter_2/pages/alert_page.dart';
-import 'package:curso_flutter_2/pages/avatar_page.dart';
 import 'package:flutter/material.dart';
-import 'package:curso_flutter_2/pages/home_page.dart';
+
+import 'package:curso_flutter_2/pages/alert_page.dart';
+import 'package:curso_flutter_2/routes/router.dart';
  
 void main() => runApp(MyApp());
  
@@ -13,10 +13,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //home: HomePage()
       initialRoute: '/',
-      routes: <String, WidgetBuilder> {
-        '/'     : (BuildContext context)=> HomePage(),
-        'alert' : (BuildContext context)=> AlertPage(),
-        'avatar': (BuildContext context)=> AvatarPage()
+      routes: getApplicationsRoutes(),
+      //Aparecen rutas que no estan
+      onGenerateRoute: (settings) {
+        print('ruta llamada ${settings.name}');
+        return MaterialPageRoute(
+          builder: ( BuildContext context ) => AlertPage()
+        );
       },
     );
   }
