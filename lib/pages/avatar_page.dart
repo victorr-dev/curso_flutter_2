@@ -23,6 +23,13 @@ class AvatarPage extends StatelessWidget {
           )
         ],
       ),
+      body: Center(
+        child: FadeInImage(
+          image: NetworkImage('https://www.buscabiografias.com/img/people/Stanley_Kubrick.jpg'),
+          placeholder: AssetImage('assets/jar-loading.gif'),
+          fadeInDuration: Duration(milliseconds: 200),
+        ),
+      ),
     );
   }
 }
