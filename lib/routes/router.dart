@@ -5,6 +5,7 @@ import 'package:curso_flutter_2/pages/avatar_page.dart';
 import 'package:curso_flutter_2/pages/home_page.dart';
 import 'package:curso_flutter_2/pages/card_page.dart';
 import 'package:curso_flutter_2/pages/animated_container.dart';
+import 'package:curso_flutter_2/pages/fields_page.dart';
 
 Map<String, WidgetBuilder> getApplicationsRoutes(){
 return <String, WidgetBuilder> {
@@ -12,6 +13,7 @@ return <String, WidgetBuilder> {
         'alert' : (BuildContext context)=> AlertPage(),
         'avatar': (BuildContext context)=> AvatarPage(),
         'card'  : (BuildContext context)=> CardPage(),
-        'animateContainer': (BuildContext context)=> AnimatePage()
+        'animateContainer': (BuildContext context)=> AnimatePage(),
+        'input'  : (BuildContext context) => FieldsPages()
       };
 }
