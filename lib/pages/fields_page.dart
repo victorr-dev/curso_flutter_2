@@ -9,6 +9,11 @@ class _FieldsPagesState extends State<FieldsPages> {
 
   String _nombre = '';
   String _email = '';
+  String _fecha = '';
+
+  //Se crea para poder tener acceso y modificar propiedades del input
+  TextEditingController _inputFieldDateController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +29,9 @@ class _FieldsPagesState extends State<FieldsPages> {
           Divider(),
           _crearInputPassword(),
           Divider(),
-          _crearPersona()
-
+          _crearPersona(),
+          Divider(),
+          _crearFecha(context)
         ],
       ),
     );
@@ -95,6 +101,47 @@ class _FieldsPagesState extends State<FieldsPages> {
   }
 
 
+  Widget _crearFecha(BuildContext context) {
+    return TextField(
+      controller: _inputFieldDateController,
+      enableInteractiveSelection: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20.0))
+        ),
+        hintText: 'Fecha',
+        labelText: 'Fecha',
+        helperText: 'Introduce la fecha',
+        suffixIcon: Icon(Icons.calendar_today),
+        icon: Icon(Icons.date_range),
+      ),
+      onTap: () {
+        //Quita el focus del input
+        FocusScope.of(context).requestFocus(new FocusNode());
+        _selectDate(context);
+      },
+    );
+  }
+
+  void _selectDate(BuildContext context) async {
+
+    DateTime picked = await showDatePicker(
+      context:  context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2018),
+      lastDate: DateTime(2030)
+    );
+
+    if(picked != null){
+      setState(() {
+       _fecha = picked.toString(); 
+       _inputFieldDateController.text = _fecha;
+      });
+    }
+
+
+  }
+
   Widget _crearPersona() {
     return ListTile(
         title: Text('El nombre es: $_nombre'),
@@ -102,5 +149,4 @@ class _FieldsPagesState extends State<FieldsPages> {
     );
 
   }
-
 }
