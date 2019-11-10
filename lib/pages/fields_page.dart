@@ -100,7 +100,6 @@ class _FieldsPagesState extends State<FieldsPages> {
     );
   }
 
-
   Widget _crearFecha(BuildContext context) {
     return TextField(
       controller: _inputFieldDateController,
@@ -123,13 +122,21 @@ class _FieldsPagesState extends State<FieldsPages> {
     );
   }
 
-  void _selectDate(BuildContext context) async {
+  Widget _crearPersona() {
+    return ListTile(
+        title: Text('El nombre es: $_nombre'),
+        subtitle: Text('Email: $_email'),
+    );
+  }
+  void _selectDate(BuildContext context) async { 
 
     DateTime picked = await showDatePicker(
       context:  context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2018),
-      lastDate: DateTime(2030)
+      lastDate: DateTime(2030),
+      //Cambio de idioma en datepicker
+      locale: Locale('es', 'ES')
     );
 
     if(picked != null){
@@ -138,15 +145,5 @@ class _FieldsPagesState extends State<FieldsPages> {
        _inputFieldDateController.text = _fecha;
       });
     }
-
-
-  }
-
-  Widget _crearPersona() {
-    return ListTile(
-        title: Text('El nombre es: $_nombre'),
-        subtitle: Text('Email: $_email'),
-    );
-
   }
 }
