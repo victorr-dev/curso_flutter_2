@@ -6,10 +6,12 @@ class FieldsPages extends StatefulWidget {
 }
 
 class _FieldsPagesState extends State<FieldsPages> {
-
   String _nombre = '';
   String _email = '';
   String _fecha = '';
+
+  List<String> _poderes = ['Volar', 'Rayos-X', 'Fuego', 'Agua'];
+  String _opcionSeleccionada = 'Volar';
 
   //Se crea para poder tener acceso y modificar propiedades del input
   TextEditingController _inputFieldDateController = TextEditingController();
@@ -23,15 +25,17 @@ class _FieldsPagesState extends State<FieldsPages> {
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         children: <Widget>[
-          _crearInput(), 
+          _crearInput(),
           Divider(),
           _crearInputEmail(),
           Divider(),
           _crearInputPassword(),
           Divider(),
-          _crearPersona(),
+          _crearFecha(context),
           Divider(),
-          _crearFecha(context)
+          _crearDropDown(),
+          Divider(),
+          _crearPersona(),
         ],
       ),
     );
@@ -44,8 +48,7 @@ class _FieldsPagesState extends State<FieldsPages> {
       textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
         counter: Text('Letras ${_nombre.length}'),
         hintText: 'Nombre de la persona',
         labelText: 'Nombre',
@@ -55,7 +58,7 @@ class _FieldsPagesState extends State<FieldsPages> {
       ),
       onChanged: (e) {
         setState(() {
-         _nombre = e; 
+          _nombre = e;
         });
       },
     );
@@ -66,8 +69,7 @@ class _FieldsPagesState extends State<FieldsPages> {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
         counter: Text('Letras ${_nombre.length}'),
         hintText: 'Email',
         labelText: 'Email',
@@ -86,8 +88,7 @@ class _FieldsPagesState extends State<FieldsPages> {
       obscureText: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
         hintText: 'Password',
         labelText: 'Password',
         helperText: 'Password',
@@ -106,8 +107,7 @@ class _FieldsPagesState extends State<FieldsPages> {
       enableInteractiveSelection: false,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
         hintText: 'Fecha',
         labelText: 'Fecha',
         helperText: 'Introduce la fecha',
@@ -124,26 +124,57 @@ class _FieldsPagesState extends State<FieldsPages> {
 
   Widget _crearPersona() {
     return ListTile(
-        title: Text('El nombre es: $_nombre'),
-        subtitle: Text('Email: $_email'),
+      title: Text('El nombre es: $_nombre'),
+      subtitle: Text('Email: $_email'),
     );
   }
-  void _selectDate(BuildContext context) async { 
 
+  void _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
-      context:  context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2018),
-      lastDate: DateTime(2030),
-      //Cambio de idioma en datepicker
-      locale: Locale('es', 'ES')
-    );
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2030),
+        //Cambio de idioma en datepicker
+        locale: Locale('es', 'ES'));
 
-    if(picked != null){
+    if (picked != null) {
       setState(() {
-       _fecha = picked.toString(); 
-       _inputFieldDateController.text = _fecha;
+        _fecha = picked.toString();
+        _inputFieldDateController.text = _fecha;
       });
     }
+  }
+
+  List<DropdownMenuItem<String>> getOpcionesDropown() {
+    List<DropdownMenuItem<String>> lista = List();
+
+    _poderes.forEach((poder) {
+      lista.add(DropdownMenuItem(
+        child: Text(poder),
+        value: poder,
+      ));
+    });
+    return lista;
+  }
+
+  Widget _crearDropDown() {
+    return Row(
+      children: <Widget>[
+        Icon(Icons.select_all),
+        SizedBox(width: 30.0),
+        Expanded(
+          child: DropdownButton(
+            value: _opcionSeleccionada,
+            items: getOpcionesDropown(),
+            onChanged: (opt) {
+              setState(() {
+                _opcionSeleccionada = opt;
+              });
+            },
+          ),
+        )
+      ],
+    );
   }
 }
