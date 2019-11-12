@@ -1,3 +1,4 @@
+import 'package:curso_flutter_2/pages/slider_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:curso_flutter_2/pages/alert_page.dart';
@@ -14,6 +15,7 @@ return <String, WidgetBuilder> {
         'avatar': (BuildContext context)=> AvatarPage(),
         'card'  : (BuildContext context)=> CardPage(),
         'animateContainer': (BuildContext context)=> AnimatePage(),
-        'input'  : (BuildContext context) => FieldsPages()
+        'input'  : (BuildContext context) => FieldsPages(),
+        'slider' :(BuildContext context) => SliderPage()
       };
 }

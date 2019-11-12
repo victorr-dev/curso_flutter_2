@@ -24,7 +24,12 @@
         {
             "ruta" : "input",
             "icon" : "input",
-            "texto": "input"
+            "texto": "Input"
+        },
+        {
+            "ruta" : "slider",
+            "icon" : "tune",
+            "texto": "Slider"
         }
     ]
 }
