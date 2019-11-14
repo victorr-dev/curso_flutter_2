@@ -49,21 +49,24 @@ class _ListaPageState extends State<ListaPage> {
   }
 
   Widget _crearLista() {
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: _lista.length,
-      itemBuilder: (BuildContext context, int index) {
-        final imagen = _lista[index];
-        return FadeInImage(
-          image: NetworkImage('https://picsum.photos/id/$imagen/237/200'),
-          placeholder: AssetImage('assets/jar-loading.gif'),
-        );
-      },
+    return RefreshIndicator(
+      onRefresh: _getPageOne,
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: _lista.length,
+        itemBuilder: (BuildContext context, int index) {
+          final imagen = _lista[index];
+          return FadeInImage(
+            image: NetworkImage('https://picsum.photos/id/$imagen/237/200'),
+            placeholder: AssetImage('assets/jar-loading.gif'),
+          );
+        },
+      ),
     );
   }
 
   Widget _crearLoading() {
-    if(_isLoading) {
+    if (_isLoading) {
       return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -72,13 +75,14 @@ class _ListaPageState extends State<ListaPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CircularProgressIndicator(),
-
             ],
           ),
-          SizedBox(height: 15.0 ,)
+          SizedBox(
+            height: 15.0,
+          )
         ],
       );
-    }else{
+    } else {
       return Container();
     }
   }
@@ -92,7 +96,7 @@ class _ListaPageState extends State<ListaPage> {
     setState(() {});
   }
 
-  Future<Null> _fetchData() async {
+  Future _fetchData() async {
     _isLoading = true;
     setState(() {});
 
@@ -100,16 +104,23 @@ class _ListaPageState extends State<ListaPage> {
     return new Timer(duration, respuestaHttp);
   }
 
+  Future _getPageOne() async {
+    final duration = Duration(seconds: 2);
+    new Timer(duration, (){
+      _lista.clear();
+      _ultimo++;
+      _agregar10();
+    });
+
+    return Future.delayed(duration);
+  }
+
   void respuestaHttp() {
     _isLoading = false;
 
-    _scrollController.animateTo(
-      _scrollController.position.pixels + 100,
-      curve: Curves.fastOutSlowIn,
-      duration: Duration(milliseconds: 250)
-    );
+    _scrollController.animateTo(_scrollController.position.pixels + 100,
+        curve: Curves.fastOutSlowIn, duration: Duration(milliseconds: 250));
 
     _agregar10();
-
   }
 }
