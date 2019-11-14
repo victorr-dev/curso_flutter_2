@@ -1,3 +1,4 @@
+import 'package:curso_flutter_2/pages/lista_page.dart';
 import 'package:curso_flutter_2/pages/slider_page.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ return <String, WidgetBuilder> {
         'card'  : (BuildContext context)=> CardPage(),
         'animateContainer': (BuildContext context)=> AnimatePage(),
         'input'  : (BuildContext context) => FieldsPages(),
-        'slider' :(BuildContext context) => SliderPage()
+        'slider' :(BuildContext context) => SliderPage(),
+        'list'   :(BuildContext context) => ListaPage()
       };
 }
