@@ -7,6 +7,7 @@ class SliderPage extends StatefulWidget {
 
 class _SliderPageState extends State<SliderPage> {
   double _valorSlider = 200.0;
+  bool _checkSlider = false;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class _SliderPageState extends State<SliderPage> {
         child: Column(
         children: <Widget>[
           _crearSlider(),
+          _crearCheckbox(),
           Expanded(child: _crearImagen())
         ],
       ),),
@@ -31,9 +33,30 @@ class _SliderPageState extends State<SliderPage> {
       min: 100.0,
       max: 500.0,
       value: _valorSlider,
-      onChanged: (newValue) {
+      onChanged:_checkSlider ? null  : (newValue) {
         setState(() {
           _valorSlider = newValue;
+        });
+      },
+    );
+  }
+
+  Widget _crearCheckbox() {
+    /* return Checkbox(
+      value: _checkSlider,
+      onChanged: (valor){
+        setState(() {
+          _checkSlider = valor;
+        });
+      },
+    ); */
+
+    return CheckboxListTile(
+      title: Text('Activar Slider'),
+      value: _checkSlider,
+      onChanged: (valor){
+        setState(() {
+          _checkSlider = valor;
         });
       },
     );
